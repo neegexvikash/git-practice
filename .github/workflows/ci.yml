@@ -19,7 +19,21 @@ jobs:
           echo "Checking project..."
           ls -la
 
-      - name: Check index.html
+      - name: Validate HTML
         run: |
           test -f index.html
-          echo "index.html exists"
+          grep -qi "<html" index.html
+          grep -qi "<body" index.html
+          grep -qi "</html>" index.html
+          echo "HTML validation successful"
+
+      - name: Build application
+        run: |
+          mkdir -p build
+          cp index.html build/
+          echo "Build completed successfully"
+
+      - name: Verify build
+        run: |
+          test -f build/index.html
+          echo "Build verified successfully"
